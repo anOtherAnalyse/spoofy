@@ -227,9 +227,15 @@ void dissect_tcp(char* buff, unsigned int size) {
 
   uint16_t port_src = ntohs(header->src_port), port_dst = ntohs(header->dst_port);
 
+  struct servent* port_src_name = getservbyport(header->src_port, NULL);
+  struct servent* port_dst_name = getservbyport(header->dst_port, NULL);
+
   print_dissect("\x1b[7mL4\x1b[m TCP, header size %u, payload size %u", header_size, payload_size);
-  print_dissect("   Source:      %hu", port_src);
-  print_dissect("   Destination: %hu", port_dst);
+  if(!port_src_name) print_dissect("   Source:      %hu", port_src);
+  else print_dissect("   Source:      %hu [\033[31m%s\033[0m]", port_src, port_src_name->s_name);
+
+  if(!port_dst_name) print_dissect("   Destination: %hu", port_dst);
+  else print_dissect("   Destination: %hu [\033[31m%s\033[0m]", port_dst, port_dst_name->s_name);
 
   // Print flags
   if(header->flags || header->NS) {
@@ -298,9 +304,14 @@ void dissect_udp(char* buff, unsigned int size) {
   unsigned short int port_src = ntohs(header->src_port), port_dst = ntohs(header->dst_port), length = ntohs(header->length);
   unsigned short int payload_size = length - sizeof(struct udp_header);
 
+  struct servent* port_src_name = getservbyport(header->src_port, NULL);
+  struct servent* port_dst_name = getservbyport(header->dst_port, NULL);
+
   print_dissect("\x1b[7mL4\x1b[m UDP, header size %lu bytes, payload size %u bytes", sizeof(struct udp_header), payload_size);
-  print_dissect("   Source:      %hu", port_src);
-  print_dissect("   Destination: %hu", port_dst);
+  if(!port_src_name) print_dissect("   Source:      %hu", port_src);
+  else print_dissect("   Source:      %hu [\033[31m%s\033[0m]", port_src, port_src_name->s_name);
+  if(!port_dst_name) print_dissect("   Destination: %hu", port_dst);
+  else print_dissect("   Destination: %hu [\033[31m%s\033[0m]", port_dst, port_dst_name->s_name);
 
   if(size < length) {
     print_dissect("   Truncated UDP payload (got %u of %u bytes)", size - (unsigned int)sizeof(struct udp_header), payload_size);
