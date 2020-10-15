@@ -594,7 +594,7 @@ void dissect_ascii(char* buff, unsigned int size) {
   uint32_t current_size;
   char* limit = buff + size, *current;
 
-  print_dissect("\x1b[7mApplication layer data, size %u bytes\x1b[m", size);
+  print_dissect_header("Application layer data, size %u bytes", size);
 
   while(buff < limit) {
     current = buff;
