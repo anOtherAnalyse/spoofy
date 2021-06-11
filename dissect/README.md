@@ -1,20 +1,20 @@
-# Packet dissection & display utility
+# Packet dissection utility
 
 ### Purpose
 
-This package offers a little console utility to parse and display `.pcap` files content. Its primary purpose is to display a fast summary of packets captured with `spoofy`.
+Command line utility to parse and display `.pcap` file content. Can be used to get fast summary of captured packets.
 
-Note that software like Wireshark or Tcpdump are more suitable to open `.pcap` files as this utility is very basic and only handle main internet protocols.
+Software like Wireshark or Tcpdump are more suitable to open `.pcap` captures as they will provide more information, and handle more protocols.
 
 #### Compilation
-Use `make` to compile. This will produce the executable `dct`.
+Compile with `make`. This will produce the executable `dct`.
 
 #### Usage
 `$ dct <file.pcap>`
 
 #### Navigation
 
-You can navigate in the packets list & packet summary using the following keys :
+Navigation into the packets list & packet summary.
 
 In the packets list
 * arrow keys (up/down) -> previous/next packet
@@ -22,7 +22,6 @@ In the packets list
 * crtl-b -> page up
 * slash (/) -> enter a command
 * enter -> display selected packet summary / validate command
-* erase -> erase a character in the command
 * crtl-q -> quit application
 
 In the packet summary view
@@ -33,14 +32,14 @@ In the packet summary view
 * escape -> go back to packets list
 * crtl-q -> quit application
 
-#### Commands
+#### Available commands
 
 ##### filter packets
 `/filter <filter_rule>`
 <br>
-The filter rule syntax is the same as spoofy. Refer to the spoofy README.md. This will only display packets applying to the given filter.
+Only show packets applying to given filter. Same filter rule as in the spoofy utility.
 
 ##### remove filter
 `/no filter`
 <br>
-This will remove previously applied filter
+Remove previously applied filter
